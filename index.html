@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Chocolate Factory Game</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #f4e1d2;
+            color: #3a3a3a;
+            text-align: center;
+            padding: 20px;
+        }
+        pre {
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .game-output {
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+        }
+        input[type="button"] {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #a35f41;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="button"]:hover {
+            background-color: #8e5134;
+        }
+    </style>
+</head>
+<body>
+
+<pre>
+*******************************************************************************
+THE CHOCOLATE FACTORY!!!...
+Made by Betty Okwedadi
+
+I want to melt you down,
+into a chocolate fountain             /) (\
+and then drink you!   *happy sighs*  ((,,,))
+                                 \,//(((((((\,/
+  (I've always been addicted      (((  ^ ^  )))
+  to chocolate in all forms       ))))  -   ((((
+  I know it's really wicked but  (()(\ )-( /))()
+  I've fallen for its charms)    ))))/`-\~\.((((
+                                 ((( \/==\_\ )))
+
+    Betty, The Giant Chocolate Monster!!!
+*******************************************************************************
+<!-- Adding the image -->
+<img src="ChocolateMonsterBetty.png" alt="Betty the Chocolate Monster" style="width:300px;height:auto;">
+
+</pre>
+
+<div id="game-output" class="game-output"></div>
+
+<div id="game-input"></div>
+
+<script>
+    let gameOutput = document.getElementById("game-output");
+    let gameInput = document.getElementById("game-input");
+
+    function printToGame(text) {
+        gameOutput.innerText += text + "\n";
+    }
+
+    function clearInput() {
+        gameInput.innerHTML = "";
+    }
+
+    function setInput(options) {
+        clearInput();
+        options.forEach(option => {
+            let button = document.createElement("input");
+            button.type = "button";
+            button.value = option.text;
+            button.onclick = option.action;
+            gameInput.appendChild(button);
+        });
+    }
+
+    function startGame() {
+        printToGame("Welcome to The Chocolate Factory!");
+        printToGame("Your mission is to find and capture Betty, The Giant Chocolate Monster, while she's sleeping.\n Which way will you go?");
+
+        setInput([
+            {text: 'Left', action: goLeft},
+            {text: 'Right', action: goRight}
+        ]);
+    }
+
+    function goLeft() {
+        printToGame("You've come to a chocolate fountain. There is a door on the other side of it, to get to the door,\n"
+                    + "you have to make the right choice. Will you 'Drink' from or 'Bath' in the fountain?\n");
+        setInput([
+            {text: 'Drink', action: drink},
+            {text: 'Bath', action: bath}
+        ]);
+    }
+
+    function goRight() {
+        printToGame("OOPS!!! You have fallen into a chocolate lake. Will you Swim or Fly?\n");
+        setInput([
+            {text: 'Swim', action: bath},
+            {text: 'Fly', action: gameOver}
+        ]);
+    }
+
+    function drink() {
+        printToGame("You got attacked and eaten by a Monster Chocolate Bird named Betty.\nGame Over, Delicious You!\n");
+        setInput([{text: 'Restart', action: startGame}]);
+    }
+
+    function bath() {
+        printToGame("You arrive at the door covered in gooey, dripping chocolate, Yum!\n"
+                    + "You open the door and you find 3 more doors... Oooh!.\n"
+                    + "One red, one yellow and one blue.\n"
+                    + "Which colour do you choose?\n");
+        setInput([
+            {text: 'Red', action: gameOverRed},
+            {text: 'Blue', action: gameOverBlue},
+            {text: 'Yellow', action: victory}
+        ]);
+    }
+
+    function gameOverRed() {
+        printToGame("You have been melted down into Red Hot Chocolate and drunk by Betty.\nGame Over, Delicious You!\n");
+        setInput([{text: 'Restart', action: startGame}]);
+    }
+
+    function gameOverBlue() {
+        printToGame("You have been turned into a blue chocolate candy and eaten by Betty.\nGame Over, Delicious You!\n");
+        setInput([{text: 'Restart', action: startGame}]);
+    }
+
+    function victory() {
+        printToGame("Bravo!!! You have found and captured Betty, the Giant Chocolate Monster, while sleeping.\n"
+                    + "You will have free chocolate for the rest of your life.\nYou Win!\n");
+        setInput([{text: 'Restart', action: startGame}]);
+    }
+
+    function gameOver() {
+        printToGame("You got attacked and eaten by a Monster Chocolate Bird named Betty.\nGame Over, Delicious You!\n");
+        setInput([{text: 'Restart', action: startGame}]);
+    }
+
+    startGame();
+</script>
+
+</body>
+</html>
